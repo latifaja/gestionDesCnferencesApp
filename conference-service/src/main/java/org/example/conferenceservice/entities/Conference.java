@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.conferenceservice.enums.ConfType;
+import org.example.conferenceservice.models.Keynote;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -21,5 +22,10 @@ public class Conference {
     private LocalDateTime creationDate;
     @OneToMany(mappedBy = "conf")
     private List<Review> reviews;
+
+
+     private Long keynoteId;
+     @Transient
+     private Keynote keynote;
 
 }

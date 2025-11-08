@@ -3,16 +3,22 @@ package org.example.conferenceservice;
 import org.example.conferenceservice.entities.Conference;
 import org.example.conferenceservice.entities.Review;
 import org.example.conferenceservice.enums.ConfType;
+import org.example.conferenceservice.feign.KeynoteRestClient;
+import org.example.conferenceservice.models.Keynote;
 import org.example.conferenceservice.repositories.ConfRepo;
 import org.example.conferenceservice.repositories.ReviewRepo;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
+import org.springframework.hateoas.PagedModel;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 
 @SpringBootApplication
+@EnableFeignClients
 public class ConferenceServiceApplication {
 
     public static void main(String[] args) {
@@ -20,20 +26,25 @@ public class ConferenceServiceApplication {
     }
 
     @Bean
-    CommandLineRunner commandLineRunner(ReviewRepo reviewRepo, ConfRepo confRepo) {
+    CommandLineRunner commandLineRunner(ReviewRepo reviewRepo, ConfRepo confRepo, KeynoteRestClient keynoteRestClient) {
         return args -> {
 
+            Collection<Keynote> keynotes = keynoteRestClient.findAllKeynotes().getContent();
+            keynotes.forEach(keynote -> {
+                System.out.println(keynote);
+                confRepo.save(
+                        Conference.builder()
+                                .durée(2)
+                                .score(3)
+                                .titre("TTTT")
+                                .confType(ConfType.ACADEMIQUE)
+                                .creationDate(LocalDateTime.now())
+                                .keynoteId(keynote.getId())
+                                .build()
+                );
 
+            });
 
-               confRepo.save(
-                       Conference.builder()
-                               .durée(2)
-                               .score(3)
-                               .titre("TTTT")
-                               .confType(ConfType.ACADEMIQUE)
-                               .creationDate(LocalDateTime.now())
-                               .build()
-                       );
             confRepo.findAll().forEach(
                     conf->{
                         Review review = Review.builder()

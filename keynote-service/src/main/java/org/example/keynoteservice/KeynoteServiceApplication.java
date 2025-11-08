@@ -22,7 +22,6 @@ public class KeynoteServiceApplication {
         return args -> {
             for (int i=0;i<5;i++){
                 Keynote keynote = Keynote.builder()
-                        .id(UUID.randomUUID().toString())
                         .email("aaaaaaaa"+i+"@gmail.com")
                         .nom("aaa"+i)
                         .prenom("aaaa"+i)

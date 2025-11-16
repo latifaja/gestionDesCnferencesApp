@@ -12,7 +12,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
-import org.springframework.hateoas.PagedModel;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -29,7 +28,7 @@ public class ConferenceServiceApplication {
     CommandLineRunner commandLineRunner(ReviewRepo reviewRepo, ConfRepo confRepo, KeynoteRestClient keynoteRestClient) {
         return args -> {
 
-            Collection<Keynote> keynotes = keynoteRestClient.findAllKeynotes().getContent();
+            Collection<Keynote> keynotes = keynoteRestClient.getAllKeynotes().getContent();
             keynotes.forEach(keynote -> {
                 System.out.println(keynote);
                 confRepo.save(

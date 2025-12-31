@@ -12,6 +12,8 @@
         <option value="$PROJECT_DIR$/descovery-service/pom.xml" />
         <option value="$PROJECT_DIR$/discovery-service/pom.xml" />
         <option value="$PROJECT_DIR$/config-service/pom.xml" />
+        <option value="$PROJECT_DIR$/chatbot-service/pom.xml" />
+        <option value="$PROJECT_DIR$/mcp-sevice/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
